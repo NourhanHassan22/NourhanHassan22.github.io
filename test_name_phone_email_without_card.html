@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+
+<body>
+
+    <script>
+
+        //let nam = "Nourhan";
+
+        let nam = null;
+
+        function preSendhandler(event) {
+            event.data.context.skills['main skill'] = event.data.context.skills['main skill'];
+            //event.data.context.skills['main skill'].user_defined.Name = nam;
+            event.data.context.skills['main skill'].user_defined.user_name = nam;
+        }
+
+
+
+        window.watsonAssistantChatOptions = {
+            integrationID: "b499b84b-1aa8-4e75-901e-468e2cc32969", // The ID of this integration.
+            region: "eu-gb", // The region your integration is hosted in.
+            serviceInstanceID: "70483e32-ea33-430e-aff8-e7a4eca8bd90", // The ID of your service instance.
+            onLoad: function (instance) {
+
+                instance.once(({ type:"pre:send", handler: preSendhandler }));
+                instance.render();
+
+      sendObject = {
+                  "input": {
+                      "message_type": "text",
+                      "text": "start"
+                  }
+              };
+              sendOptions = {
+                  "silent": true
+              }
+      instance.send(sendObject, sendOptions).catch(function (error) {
+                  console.error('This message did not send!');
+              });
+            //window.WebChatInstance = instance;
+            }
+        };
+        setTimeout(function () {
+            const t = document.createElement('script');
+            t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js"
+            document.head.appendChild(t);
+        });
+
+    </script>
+    <!-- <app-root></app-root> -->
+</body>
+
+</html>
